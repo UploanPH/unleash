@@ -1,0 +1,39 @@
+version: "3.6"
+
+
+services:
+  unleash_service:
+    image: %DOCKER_IMAGE%
+    stop_grace_period: 30s
+    networks:
+      - traefik_traefik_public
+    environment:
+      - "DEBUG=true"
+      - "UNLEASH_DB_URL=jdbc:postgresql://infra_core_db:5432/unleash_service?useSSL=false&useUnicode=true&characterEncoding=UTF-8"
+      - "DB_USER=postgres"
+      - "DB_PASSWORD=uploan@2019!"
+      - "UNLEASH_APP_PORT=8090"
+      - "UPLOAN_AUTH_URL=https://gw.dev.uploan.ph/services/authentication-service"
+      - "AUTH_URL_DEFAULT_CREATED_BY=0"
+      - "LOG_LOCATION=/var/log/unleash_service.log"
+      - "NAMING_SERVER=http://eureka-server:8761/eureka"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 30s
+        order: start-first
+      labels:
+        - traefik.docker.network=traefik_traefik_public
+        - traefik.frontend.rule=Host:unleash-service.dev.uploan.ph
+        - traefik.port=8090
+        - traefik.backend=unleash-service-dev
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+
+networks:
+  traefik_traefik_public:
+    external: true
