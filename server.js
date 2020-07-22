@@ -23,3 +23,31 @@ unleash
     .catch(err => {
         console.error(err);
     });
+
+const Eureka = require('eureka-js-client').Eureka;
+const eureka = new Eureka({
+    instance: {
+        app: process.env.UNLEASH_APP_NAME,
+        hostName: 'localhost',
+        ipAddr: '127.0.0.1',
+        port: {
+            '$': appPort,
+            '@enabled': 'true',
+        },
+        vipAddress: 'localhost',
+        dataCenterInfo: {
+            '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
+            name: 'MyOwn',
+        }
+    },
+    eureka: {
+        host: process.env.EUREKA_HOST,
+        port: process.env.EUREKA_PORT,
+        servicePath: process.env.EUREKA_SERVICE_PATH,
+        preferIpAddress: process.env.EUREKA_PREFER_IP_ADDRESS
+    }
+});
+eureka.logger.level('debug');
+eureka.start(function (error) {
+    console.log(error || 'registered to Uploan Discovery Service');
+});
