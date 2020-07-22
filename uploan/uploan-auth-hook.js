@@ -1,6 +1,7 @@
 'use strict';
 
 const uploanAuth = require('./auth');
+const User = require('../lib/user');
 const { AuthenticationRequired } = require('../lib/server-impl.js');
 
 const uploanLoginUrl = process.env.UPLOAN_LOGIN_URL
@@ -31,6 +32,8 @@ function uploanAuthHook(app) {
                 )
                 .end();
         }
+        const adminDetails = isValidToken.data;
+        req.user = new User({ email: adminDetails.user_name });
         return next();
     });
 }
