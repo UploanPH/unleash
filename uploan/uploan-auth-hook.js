@@ -3,8 +3,8 @@
 const uploanAuth = require('./auth');
 const { AuthenticationRequired } = require('../lib/server-impl.js');
 
-const uploanAuthUrl = process.env.UPLOAN_AUTH_URL
-    ? process.env.UPLOAN_AUTH_URL
+const uploanLoginUrl = process.env.UPLOAN_LOGIN_URL
+    ? process.env.UPLOAN_LOGIN_URL
     : 'https://localhost:3000/auth';
 
 function uploanAuthHook(app) {
@@ -13,7 +13,6 @@ function uploanAuthHook(app) {
         if (!isValidToken.result) {
             return res.status(401).send(isValidToken.data);
         }
-
         return next();
     });
 
@@ -24,7 +23,7 @@ function uploanAuthHook(app) {
                 .status('401')
                 .json(
                     new AuthenticationRequired({
-                        path: uploanAuthUrl,
+                        path: uploanLoginUrl,
                         type: 'uploan',
                         message:
                             'You have to identify yourself in order to use Unleash.',
