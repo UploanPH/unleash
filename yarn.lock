@@ -1847,7 +1847,16 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-express@^4.17.1:
+express-actuator@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/express-actuator/-/express-actuator-1.6.0.tgz#761d40503e4d43eff8f9134bb40d8e18ac77d6a7"
+  integrity sha512-v+x16RgLb7Vx4oNSMvdvocsIVB52H4vD5abgnKmCyxxk2PAACyzeOGU6nz3Nb+AOTt3qClOspGpxMnK7Ep4wtg==
+  dependencies:
+    express "^4.17.0"
+    moment "^2.24.0"
+    utils-fs-read-properties "1.0.0"
+
+express@^4.17.0, express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
   integrity sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==
@@ -4393,6 +4402,11 @@ prompt@^1.0.0:
     utile "0.3.x"
     winston "2.1.x"
 
+properties@1.x.x, properties@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/properties/-/properties-1.2.1.tgz#0ee97a7fc020b1a2a55b8659eda4aa8d869094bd"
+  integrity sha1-Dul6f8AgsaKlW4ZZ7aSqjYaQlL0=
+
 proxy-addr@~2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.5.tgz#34cbd64a2d81f4b1fd21e76f9f06c8a45299ee34"
@@ -5663,9 +5677,31 @@ utile@0.3.x:
     ncp "1.0.x"
     rimraf "2.x.x"
 
+utils-fs-read-file@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/utils-fs-read-file/-/utils-fs-read-file-1.0.0.tgz#8be132df4721d6913c6e5785ab880e9bc2362fa0"
+  integrity sha1-i+Ey30ch1pE8bleFq4gOm8I2L6A=
+
+utils-fs-read-properties@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/utils-fs-read-properties/-/utils-fs-read-properties-1.0.0.tgz#ce7cb6b19f6ac60fae8008169f332e58c9a24919"
+  integrity sha1-zny2sZ9qxg+ugAgWnzMuWMmiSRk=
+  dependencies:
+    properties "^1.2.1"
+    utils-fs-read-file "^1.0.0"
+    utils-properties-parse "^1.0.0"
+    validate.io-string-primitive "^1.0.0"
+
 utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
+
+utils-properties-parse@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/utils-properties-parse/-/utils-properties-parse-1.0.0.tgz#8cdf05cafa5d1a0bdc6edacec91492a9e5b7c9b4"
+  integrity sha1-jN8FyvpdGgvcbtrOyRSSqeW3ybQ=
+  dependencies:
+    properties "1.x.x"
 
 uuid@^3.3.2, uuid@^3.3.3:
   version "3.3.3"
@@ -5693,6 +5729,11 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+validate.io-string-primitive@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/validate.io-string-primitive/-/validate.io-string-primitive-1.0.1.tgz#b8135b9fb1372bde02fdd53ad1d0ccd6de798fee"
+  integrity sha1-uBNbn7E3K94C/dU60dDM1t55j+4=
 
 vary@~1.1.2:
   version "1.1.2"

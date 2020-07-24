@@ -1,5 +1,6 @@
 'use strict';
 
+const actuator = require('express-actuator');
 const uploanAuth = require('./auth');
 const User = require('../lib/user');
 const { AuthenticationRequired } = require('../lib/server-impl.js');
@@ -36,6 +37,8 @@ function uploanAuthHook(app) {
         req.user = new User({ email: adminDetails.user_name });
         return next();
     });
+
+    app.use(actuator());
 }
 
 module.exports = uploanAuthHook;
