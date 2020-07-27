@@ -78,6 +78,7 @@
     "express": "^4.17.1",
     "express-actuator": "^1.6.0",
     "gravatar-url": "^3.1.0",
+    "ip": "^1.1.5",
     "js-yaml": "^3.12.2",
     "knex": "0.20.10",
     "log4js": "^6.0.0",

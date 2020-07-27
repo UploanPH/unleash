@@ -25,20 +25,22 @@ unleash
     });
 
 const Eureka = require('eureka-js-client').Eureka;
-const instanceId = `${process.env.UNLEASH_HOST}:${appPort}@${
+const ip = require('ip');
+const instanceId = `${process.env.UNLEASH_APP_NAME}:${appPort}@${
     Math.floor(Math.random() * 10000000000)}`;
-const statusPageUrl = `https://${process.env.UNLEASH_HOST}:${appPort}/info`;
+const statusPageUrl = `http://${ip.address()}:${appPort}/info`;
 const eureka = new Eureka({
     instance: {
         app: process.env.UNLEASH_APP_NAME,
         hostName: process.env.UNLEASH_HOST,
         instanceId: instanceId,
-        ipAddr: '127.0.0.1',
+        ipAddr: ip.address(),
         port: {
             '$': appPort,
             '@enabled': 'true',
         },
-        vipAddress: instanceId,
+        status: 'UP',
+        vipAddress: process.env.UNLEASH_APP_NAME,
         statusPageUrl: statusPageUrl,
         dataCenterInfo: {
             '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
