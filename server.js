@@ -46,14 +46,15 @@ const eureka = new Eureka({
             '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
             name: 'MyOwn',
         },
-        registerWithEureka: process.env.EUREKA_REGISTER_WITH_EUREKA,
-        fetchRegistry: process.env.EUREKA_FETCH_REGISTRY
+        registerWithEureka: (process.env.EUREKA_REGISTER_WITH_EUREKA == 'true'),
+        fetchRegistry: (process.env.EUREKA_FETCH_REGISTRY == 'true')
     },
     eureka: {
         host: process.env.EUREKA_HOST,
         port: process.env.EUREKA_PORT,
         servicePath: process.env.EUREKA_SERVICE_PATH,
-        preferIpAddress: process.env.EUREKA_PREFER_IP_ADDRESS
+        preferIpAddress: (process.env.EUREKA_PREFER_IP_ADDRESS == 'true'),
+        ssl: (process.env.EUREKA_SSL == 'true')
     }
 });
 eureka.logger.level('debug');
