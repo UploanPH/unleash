@@ -36,7 +36,7 @@ const eureka = new Eureka({
         instanceId: instanceId,
         ipAddr: ip.address(),
         port: {
-            '$': appPort,
+            '$': process.env.UNLEASH_PUBLIC_PORT,
             '@enabled': 'true',
         },
         status: 'UP',
