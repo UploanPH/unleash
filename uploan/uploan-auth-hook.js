@@ -34,7 +34,7 @@ function uploanAuthHook(app) {
                 .end();
         }
         const adminDetails = isValidToken.data;
-        req.user = new User({ email: adminDetails.user_name });
+        req.user = new User({ username: adminDetails.user_name || adminDetails.client_id });
         return next();
     });
 
