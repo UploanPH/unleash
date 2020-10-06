@@ -26,9 +26,8 @@ unleash
 
 const Eureka = require('eureka-js-client').Eureka;
 const ip = require('ip');
-const instanceId = `${process.env.UNLEASH_APP_NAME}:${process.env.UNLEASH_PUBLIC_PORT}@${
-    Math.floor(Math.random() * 10000000000)}`;
-const statusPageUrl = `https://${process.env.UNLEASH_HOST}/info`;
+const instanceId = `${process.env.UNLEASH_APP_NAME}:${process.env.UNLEASH_APP_PORT}@${Math.floor(Math.random() * 10000000000)}`;
+const statusPageUrl = `http://${process.env.UNLEASH_HOST}:${process.env.UNLEASH_APP_PORT}/info`;
 const eureka = new Eureka({
     instance: {
         app: process.env.UNLEASH_APP_NAME,
@@ -36,7 +35,7 @@ const eureka = new Eureka({
         instanceId: instanceId,
         ipAddr: ip.address(),
         port: {
-            '$': process.env.UNLEASH_PUBLIC_PORT,
+            '$': process.env.UNLEASH_APP_PORT,
             '@enabled': 'true',
         },
         status: 'UP',
