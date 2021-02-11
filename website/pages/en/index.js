@@ -27,17 +27,13 @@ function pageUrl(page, language) {
   return siteConfig.baseUrl + (language ? `${language}/` : '') + page;
 }
 
-class Button extends React.Component {
-  render() {
-    return (
-      <div className="pluginWrapper buttonWrapper">
-        <a className="button" href={this.props.href} target={this.props.target}>
-          {this.props.children}
-        </a>
-      </div>
-    );
-  }
-}
+const Button = ({className = '', href, target, children}) => (
+  <div className="pluginWrapper buttonWrapper">
+    <a className={["button", className].join(' ')} href={href} target={target}>
+      {children}
+    </a>
+  </div>
+);
 
 Button.defaultProps = {
   target: '_self',
@@ -78,19 +74,21 @@ class HomeSplash extends React.Component {
     return (
       <SplashContainer>
         <div className="inner">
+          <Survey />
           <ProjectTitle />
           <a
               className="github-button"
               href={siteConfig.repoUrl}
-              data-icon="octicon-star"
+              data-size="large"
               data-count-href="/unleash/unleash/stargazers"
               data-show-count="true"
               data-count-aria-label="# stargazers on GitHub"
               aria-label="Star this project on GitHub">
               Star
             </a>
+          <FeatureCallout />
           <PromoSection>
-            <Button href={docUrl('getting_started.html', language)}>Getting Started</Button>
+            <Button className="primary" href={docUrl('getting_started.html', language)}>Getting Started</Button>
             <Button href="#try">Try It Out</Button>
             <Button href={siteConfig.repoUrl}>GitHub</Button>
           </PromoSection>
@@ -112,7 +110,7 @@ const Block = props => (
 );
 
 const FeatureCallout = () => (
-  <div className="productShowcaseSection paddingBottom" style={{textAlign: 'center'}}>
+  <div className="productShowcaseSection" style={{textAlign: 'center'}}>
     <p>
       Unleash is a feature toggle system, that gives you a great overview of all feature toggles across 
       all your applications and services. It comes with official client implementations for Java, Node.js, Go, Ruby, Python and .Net.
@@ -124,10 +122,23 @@ const FeatureCallout = () => (
   </div>
 );
 
+const Survey = () => (
+  <div className="productShowcaseSection">
+    <p className="alert alert-warning">
+      Support us in making Unleash even better by participating in this&nbsp;
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeCM5RUG-r8x4iynYNAlge_RCI77NDg61t28rixV3BBgVra0w/viewform" target="_blank">
+        Unleash Open-Source survey.
+      </a>&nbsp;
+      By participating you will also have the chance to win a $25 Amazon gift card.
+    </p>
+  </div>
+);
+
 const SASSOffering = () => (
   <div className="productShowcaseSection">
-    <p className="sassOffering">
-      Unleash also comes in a enterprise edition with additional features and a hosted option (SaaS). Check out&nbsp;
+    <p className="alert alert-primary">
+      Unleash also comes in a enterprise edition with additional features and a hosted option. <br />
+      Check out&nbsp;
       <a href="https://www.unleash-hosted.com/open-source">unleash-hosted.com</a>
     </p>
   </div>
@@ -160,8 +171,14 @@ const UnleashClient = () => (
         <div className="blockContent">
           <h3>Clients written by awesome enthusiasts:</h3>
           <ul>
+            <li><MarkdownBlock>[cognitedata/unleash-client-rust](https://github.com/cognitedata/unleash-client-rust) (Rust)</MarkdownBlock></li>
+            <li><MarkdownBlock>[uekoetter.dev/unleash-client-dart](https://pub.dev/packages/unleash) (Dart)</MarkdownBlock></li>
+            <li><MarkdownBlock>[silvercar/unleash-client-kotlin](https://github.com/silvercar/unleash-client-kotlin) (Kotlin)</MarkdownBlock></li>
+            <li><MarkdownBlock>[minds/unleash-client-php](https://gitlab.com/minds/unleash-client-php) (PHP)</MarkdownBlock></li>
             <li><MarkdownBlock>[afontaine/unleash_ex](https://gitlab.com/afontaine/unleash_ex) (Elixir)</MarkdownBlock></li>
             <li><MarkdownBlock>[mikefrancis/laravel-unleash](https://github.com/mikefrancis/laravel-unleash) (Laravel - PHP)</MarkdownBlock></li>
+            <li><MarkdownBlock>[AppsFlyer/clojure-unleash](https://github.com/AppsFlyer/unleash-client-clojure) (Clojure)</MarkdownBlock></li>
+            <li><MarkdownBlock>[pmb0/nestjs-unleash](https://github.com/pmb0/nestjs-unleash) (NestJS - Node.js)</MarkdownBlock></li>
           </ul>
         </div>
       </div>
@@ -232,8 +249,7 @@ class Index extends React.Component {
       <div>
         <HomeSplash language={language} config={this.props.config} />
         
-        <div className="mainContainer">
-          <FeatureCallout />
+        <div className="mainContainer" style={{ paddingTop: 0 }}>
           <UnleashClient />
           <TryOut />
           <ActivationStrategies />

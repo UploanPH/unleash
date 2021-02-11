@@ -81,7 +81,7 @@ test.serial('refuses to create a strategy with an existing name', async t => {
         .post('/api/admin/strategies')
         .send({ name: 'default', parameters: [] })
         .set('Content-Type', 'application/json')
-        .expect(400);
+        .expect(409);
 });
 
 test.serial('deletes a new strategy', async t => {
@@ -118,4 +118,84 @@ test.serial('cant update a unknown strategy', async t => {
         .send({ name: 'unkown', parameters: [] })
         .set('Content-Type', 'application/json')
         .expect(404);
+});
+
+test.serial('deprecating a strategy works', async t => {
+    const request = await setupApp(stores);
+    const name = 'deprecate';
+    await request
+        .post('/api/admin/strategies')
+        .send({ name, description: 'Should deprecate this', parameters: [] })
+        .set('Content-Type', 'application/json')
+        .expect(201);
+    await request
+        .post(`/api/admin/strategies/${name}/deprecate`)
+        .send()
+        .expect(200);
+    await request
+        .get(`/api/admin/strategies/${name}`)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(res => t.is(res.body.deprecated, true));
+});
+
+test.serial('can reactivate a deprecated strategy', async t => {
+    const request = await setupApp(stores);
+    const name = 'reactivate';
+    await request
+        .post('/api/admin/strategies')
+        .send({ name, description: 'Should deprecate this', parameters: [] })
+        .set('Content-Type', 'application/json')
+        .expect(201);
+    await request
+        .post(`/api/admin/strategies/${name}/deprecate`)
+        .send()
+        .expect(200);
+    await request
+        .get(`/api/admin/strategies/${name}`)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(res => t.is(res.body.deprecated, true));
+    await request
+        .post(`/api/admin/strategies/${name}/reactivate`)
+        .send()
+        .expect(200);
+    await request
+        .get(`/api/admin/strategies/${name}`)
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .expect(res => t.is(res.body.deprecated, false));
+});
+
+test.serial('cannot deprecate default strategy', async t => {
+    t.plan(0);
+    const request = await setupApp(stores);
+    await request.post('/api/admin/strategies/default/deprecate').expect(403);
+});
+
+test.serial('can update a exiting strategy with deprecated', async t => {
+    t.plan(0);
+    const request = await setupApp(stores);
+
+    await request
+        .post('/api/admin/strategies')
+        .send({
+            name: 'myCustomStrategyDepreacted',
+            description: 'Best strategy ever.',
+            parameters: [],
+            deprecated: true,
+        })
+        .set('Content-Type', 'application/json');
+
+    const { body: strategy } = await request.get(
+        '/api/admin/strategies/myCustomStrategyDepreacted',
+    );
+
+    strategy.description = 'A new desc';
+
+    return request
+        .put('/api/admin/strategies/default')
+        .send(strategy)
+        .set('Content-Type', 'application/json')
+        .expect(200);
 });

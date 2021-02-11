@@ -1,7 +1,7 @@
 {
   "name": "unleash-server",
   "description": "Unleash is an enterprise ready feature toggles service. It provides different strategies for handling feature toggles.",
-  "version": "3.4.0",
+  "version": "3.11.2",
   "keywords": [
     "unleash",
     "feature toggle",
@@ -29,23 +29,18 @@
   "license": "Apache-2.0",
   "main": "./lib/server-impl.js",
   "bin": {
-    "unleash": "./bin/unleash.js"
+    "unleash": "bin/unleash.js"
   },
   "scripts": {
     "start": "node server.js",
     "start:google": "node examples/google-auth-unleash.js",
     "start:dev": "NODE_ENV=development supervisor --ignore ./node_modules/,website server-dev.js",
-    "start:dev:pg": "pg_virtualenv npm run start:dev:pg-chain",
-    "start:dev:pg-chain": "export DATABASE_URL=postgres://$PGUSER:$PGPASSWORD@localhost:$PGPORT/postgres ; db-migrate up && npm run start:dev",
     "db-migrate": "db-migrate",
     "lint": "eslint .",
-    "pretest": "npm run lint",
     "test": "NODE_ENV=test PORT=4243 ava",
     "test:docker": "./scripts/docker-postgres.sh",
-    "test:watch": "npm run test -- --watch",
-    "test:pg-virtualenv": "pg_virtualenv npm run test:pg-virtualenv-chai",
-    "test:pg-virtualenv-chain": "export TEST_DATABASE_URL=postgres://$PGUSER:$PGPASSWORD@localhost:$PGPORT/postgres ; npm run db-migrate-testdb && npm test",
-    "test:coverage": "nyc npm run test",
+    "test:watch": "yarn test --watch",
+    "test:coverage": "nyc --reporter=lcov yarn test",
     "test:coverage-report": "nyc report --reporter=text-lcov | coveralls"
   },
   "nyc": {
@@ -62,12 +57,13 @@
     ]
   },
   "dependencies": {
-    "@hapi/joi": "^17.1.0",
+    "ip": "^1.1.5",
     "async": "^3.1.0",
     "axios": "^0.19.2",
+    "basic-auth": "^2.0.1",
     "compression": "^1.7.3",
     "cookie-parser": "^1.4.4",
-    "cookie-session": "^2.0.0-beta.3",
+    "cookie-session": "^2.0.0-rc.1",
     "db-migrate": "0.11.11",
     "db-migrate-pg": "^1.2.2",
     "db-migrate-shared": "^1.2.0",
@@ -78,26 +74,30 @@
     "express": "^4.17.1",
     "express-actuator": "^1.6.0",
     "gravatar-url": "^3.1.0",
-    "ip": "^1.1.5",
-    "js-yaml": "^3.12.2",
-    "knex": "0.20.10",
+    "helmet": "^4.1.0",
+    "joi": "^17.3.0",
+    "js-yaml": "^3.14.0",
+    "knex": "0.21.15",
     "log4js": "^6.0.0",
+    "memoizee": "^0.4.15",
     "mime": "^2.4.2",
     "moment": "^2.24.0",
     "multer": "^1.4.1",
+    "mustache": "^4.1.0",
+    "node-fetch": "^2.6.1",
     "parse-database-url": "^0.3.0",
     "pg": "^8.0.3",
     "pkginfo": "^0.4.1",
-    "prom-client": "^12.0.0",
+    "prom-client": "^13.1.0",
     "response-time": "^2.3.2",
     "serve-favicon": "^2.5.0",
-    "unleash-frontend": "3.3.5",
-    "yargs": "^15.1.0"
+    "unleash-frontend": "3.11.4",
+    "yargs": "^16.0.3"
   },
   "devDependencies": {
     "@passport-next/passport": "^3.1.0",
     "@passport-next/passport-google-oauth2": "^1.0.0",
-    "@types/node": "^13.7.4",
+    "@types/node": "^14.0.0",
     "ava": "^3.7.0",
     "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
@@ -105,6 +105,8 @@
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-prettier": "^3.1.3",
+    "faker": "^5.3.1",
+    "fetch-mock": "^9.11.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.7",
     "lolex": "^6.0.0",
@@ -113,8 +115,8 @@
     "passport-google-auth": "^1.0.2",
     "prettier": "^1.19.1",
     "proxyquire": "^2.1.3",
-    "superagent": "^5.1.0",
-    "supertest": "^4.0.2",
+    "superagent": "^6.1.0",
+    "supertest": "^5.0.0",
     "supervisor": "^0.12.0"
   },
   "resolutions": {
@@ -124,7 +126,9 @@
     "knex/liftoff/object.map/**/kind-of": "^6.0.3",
     "knex/liftoff/findup-sync/micromatc/kind-of": "^6.0.3",
     "knex/liftoff/findup-sync/micromatc/nanomatch/kind-of": "^6.0.3",
-    "knex/liftoff/findup-sync/micromatch/define-property/**/kind-of": "^6.0.3"
+    "knex/liftoff/findup-sync/micromatch/define-property/**/kind-of": "^6.0.3",
+    "googleapis": "^39.1.0",
+    "node-forge": "^0.10.0"
   },
   "lint-staged": {
     "*.js": [
