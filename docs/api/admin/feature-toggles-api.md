@@ -3,6 +3,8 @@ id: features
 title: /api/admin/features
 ---
 
+> In order to access the admin api endpoints you need to identify yourself. If you are using the `unsecure` authententication method, you may use [basic authenticaion](https://en.wikipedia.org/wiki/Basic_access_authentication) to ientify yourself.
+
 ### Fetching Feature Toggles
 
 `GET: http://unleash.host.com/api/admin/features`
@@ -18,7 +20,9 @@ This endpoint is the one all admin ui should use to fetch all available feature 
     {
       "name": "Feature.A",
       "description": "lorem ipsum",
+      "type": "release",
       "enabled": false,
+      "stale": false,
       "strategies": [
         {
           "name": "default",
@@ -34,12 +38,20 @@ This endpoint is the one all admin ui should use to fetch all available feature 
           "name": "variant2",
           "weight": 50
         }
+      ],
+      "tags": [
+        {
+          "id": 1,
+          "type": "simple",
+          "value": "TeamRed"
+        }
       ]
     },
     {
       "name": "Feature.B",
       "description": "lorem ipsum",
       "enabled": true,
+      "stale": false,
       "strategies": [
         {
           "name": "ActiveForUserWithId",
@@ -54,11 +66,34 @@ This endpoint is the one all admin ui should use to fetch all available feature 
           }
         }
       ],
-      "variants": []
+      "variants": [],
+      "tags": []
     }
   ]
 }
 ```
+
+#### Filter feature toggles
+
+Supports three params for now
+
+- `tag` - filters for features tagged with tag
+- `project` - filters for features belonging to project
+- `namePrefix` - filters for features beginning with prefix
+
+For `tag` and `project` performs OR filtering if multiple arguments
+
+To filter for any feature tagged with a `simple` tag with value `taga` or a `simple` tag with value `tagb` use
+
+`GET https://unleash.host.com/api/admin/features?tag[]=simple:taga&tag[]simple:tagb`
+
+To filter for any feature belonging to project `myproject` use
+
+`GET https://unleash.host.com/api/admin/features?project=myproject`
+
+Response format is the same as `api/admin/features`
+
+### Fetch specific feature toggle
 
 `GET: http://unleash.host.com/api/admin/features/:featureName`
 
@@ -68,14 +103,17 @@ Used to fetch details about a specific featureToggle. This is mostly provded to 
 {
   "name": "Feature.A",
   "description": "lorem ipsum..",
+  "type": "release",
   "enabled": false,
+  "stale": false,
   "strategies": [
     {
       "name": "default",
       "parameters": {}
     }
   ],
-  "variants": []
+  "variants": [],
+  "tags": []
 }
 ```
 
@@ -89,7 +127,9 @@ Used to fetch details about a specific featureToggle. This is mostly provded to 
 {
   "name": "Feature.A",
   "description": "lorem ipsum..",
+  "type": "release",
   "enabled": false,
+  "stale": false,
   "strategies": [
     {
       "name": "default",
@@ -99,7 +139,12 @@ Used to fetch details about a specific featureToggle. This is mostly provded to 
 }
 ```
 
-Used by the admin-dashboard to create a new feature toggles. The name **must be unique**, otherwise you will get a _403-response_.
+Used by the admin-dashboard to create a new feature toggles.
+
+**Notes:**
+
+- _name_ **must be globally unique**, otherwise you will get a _403-response_.
+- _type_ is optional. If not defined it defaults to `release`
 
 Returns 200-respose if the feature toggle was created successfully.
 
@@ -113,7 +158,9 @@ Returns 200-respose if the feature toggle was created successfully.
 {
   "name": "Feature.A",
   "description": "lorem ipsum..",
+  "type": "release",
   "enabled": false,
+  "stale": false,
   "strategies": [
     {
       "name": "default",
@@ -127,6 +174,47 @@ Returns 200-respose if the feature toggle was created successfully.
 Used by the admin dashboard to update a feature toggles. The name has to match an existing features toggle.
 
 Returns 200-respose if the feature toggle was updated successfully.
+
+### Tag a Feature Toggle
+
+`POST https://unleash.host.com/api/admin/features/:featureName/tags`
+
+Used to tag a feature
+
+If the tuple (type, value) does not already exist, it will be added to the list of tags. Then Unleash will add a relation between the feature name and the tag.
+
+**Body:**
+
+```json
+{
+  "type": "simple",
+  "value": "Team-Green"
+}
+```
+
+## Success
+
+    - Returns _201-CREATED_ if the feature was tagged successfully
+    - Creates the tag if needed, then connects the tag to the existing feature
+
+## Failures
+
+    - Returns _404-NOT-FOUND_ if the `type` was not found
+
+### Remove a tag from a Feature Toggle
+
+`DELETE https://unleash.host.com/api/admin/features/:featureName/tags/:type/:value`
+
+Removes the specified tag from the `(type, value)` tuple from the Feature Toggle's list of tags.
+
+## Success
+
+    - Returns _200-OK_
+
+## Failures
+
+    - Returns 404 if the tag does not exist
+    - Returns 500 if the database could not be reached
 
 ### Archive a Feature Toggle
 
@@ -150,6 +238,7 @@ None
 {
   "name": "Feature.A",
   "description": "lorem ipsum..",
+  "type": "release",
   "enabled": true,
   "strategies": [
     {
@@ -157,7 +246,8 @@ None
       "parameters": {}
     }
   ],
-  "variants": []
+  "variants": [],
+  "tags": []
 }
 ```
 
@@ -177,14 +267,77 @@ None
 {
   "name": "Feature.A",
   "description": "lorem ipsum..",
+  "type": "release",
   "enabled": false,
+  "stale": false,
   "strategies": [
     {
       "name": "default",
       "parameters": {}
     }
   ],
-  "variants": []
+  "variants": [],
+  "tags": []
+}
+```
+
+### Mark a Feature Toggle as "stale"
+
+`POST: http://unleash.host.com/api/admin/features/:featureName/stale/on`
+
+Used to mark a feature toggle as stale (deprecated). The :featureName must match an existing Feature Toggle. Returns 200-response if the feature toggle was enabled successfully.
+
+**Body**
+
+None
+
+**Example response:**
+
+```json
+{
+  "name": "Feature.A",
+  "description": "lorem ipsum..",
+  "type": "release",
+  "enabled": true,
+  "stale": true,
+  "strategies": [
+    {
+      "name": "default",
+      "parameters": {}
+    }
+  ],
+  "variants": [],
+  "tags": []
+}
+```
+
+### Mark a Feature Toggle as "active"
+
+`POST: http://unleash.host.com/api/admin/features/:featureName/stale/off`
+
+Used to mark a feature toggle active (remove stale marking). The :featureName must match an existing Feature Toggle. Returns 200-response if the feature toggle was disabled successfully.
+
+**Body**
+
+None
+
+**Example response:**
+
+```json
+{
+  "name": "Feature.A",
+  "description": "lorem ipsum..",
+  "type": "release",
+  "enabled": false,
+  "stale": false,
+  "strategies": [
+    {
+      "name": "default",
+      "parameters": {}
+    }
+  ],
+  "variants": [],
+  "tags": []
 }
 ```
 
@@ -205,7 +358,9 @@ Used to fetch list of archived feature toggles
     {
       "name": "Feature.A",
       "description": "lorem ipsum",
+      "type": "release",
       "enabled": false,
+      "stale": false,
       "strategies": [
         {
           "name": "default",
@@ -213,6 +368,7 @@ Used to fetch list of archived feature toggles
         }
       ],
       "variants": [],
+      "tags": [],
       "strategy": "default",
       "parameters": {}
     }

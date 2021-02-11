@@ -3,13 +3,15 @@ id: metrics
 title: /api/admin/metrics
 ---
 
+> In order to access the admin api endpoints you need to identify yourself. If you are using the `unsecure` authententication method, you may use [basic authenticaion](https://en.wikipedia.org/wiki/Basic_access_authentication) to ientify yourself.
+
 # This document describes the metrics endpoint for admin ui
 
 ### Seen-toggles
 
 `GET http://unleash.host.com/api/admin/seen-toggles`
 
-This enpoints returns a list of applications and what toogles unleash has seend for each application. It will only guarantee toggles reported by client applications within the last hour, but will in most cases remember seen-toggles for applications longer
+This enpoints returns a list of applications and what toogles unleash has seen for each application. It will only guarantee toggles reported by client applications within the last hour, but will in most cases remember seen toggles for applications longer.
 
 **Example response:**
 

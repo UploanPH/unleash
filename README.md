@@ -1,10 +1,11 @@
 # Unleash
 
-[![Build Status](https://travis-ci.org/Unleash/unleash.svg?branch=master)](https://travis-ci.org/Unleash/unleash) [![Coverage Status](https://coveralls.io/repos/github/Unleash/unleash/badge.svg?branch=master)](https://coveralls.io/github/Unleash/unleash?branch=master) [![Dependency Status](https://david-dm.org/Unleash/unleash.svg)](https://david-dm.org/Unleash/unleash) [![devDependency Status](https://david-dm.org/Unleash/unleash/dev-status.svg)](https://david-dm.org/Unleash/unleash?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/Unleash/unleash.svg)](https://greenkeeper.io/) [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy/?template=https://github.com/Unleash/unleash)
+![Build & Tests](https://github.com/Unleash/unleash/workflows/Build%20%26%20Tests/badge.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/Unleash/unleash/badge.svg?branch=master)](https://coveralls.io/github/Unleash/unleash?branch=master) [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy/?template=https://github.com/Unleash/unleash)
 
 Unleash is a open source feature flag & toggle system, that gives you a great overview over all feature toggles across all your applications and services. It comes with official client implementations for Java, Node.js, Go, Ruby, Python and .NET Core.
 
-## Unleash-enterprise  [:link:](https://www.unleash-hosted.com/open-source)
+## Unleash-enterprise [:link:](https://www.unleash-hosted.com/open-source)
+
 Unleash is also available in an enterprise edition, which builds on top of the open-source version, with additional features. Go to [unleash-hosted.com](https://www.unleash-hosted.com/open-source) to learn more about the enterprise offering.
 
 ## What is a feature toggle?
@@ -34,7 +35,7 @@ Read more about activation strategies in [docs/activation-strategies.md](./docs/
 
 ## Variants
 
-Sometimes you need more control than just a boolean flag. Variants provides this and can be used in combination of feature toggles and allow you to return multiple variants from a feature toggle, if it is enabled. 
+Sometimes you need more control than just a boolean flag. Variants provides this and can be used in combination of feature toggles and allow you to return multiple variants from a feature toggle, if it is enabled.
 
 ## Client implementations
 
@@ -50,12 +51,15 @@ Official client SDK's:
 - [unleash/unleash-client-dotnet](https://github.com/Unleash/unleash-client-dotnet)
 
 Clients written by awesome enthusiasts: :fire:
+
 - [cognitedata/unleash-client-rust](https://github.com/cognitedata/unleash-client-rust) (Rust)
 - [silvercar/unleash-client-kotlin](https://github.com/silvercar/unleash-client-kotlin) (Kotlin)
 - [uekoetter.dev/unleash-client-dart](https://pub.dev/packages/unleash) (Dart)
 - [minds/unleash-client-php](https://gitlab.com/minds/unleash-client-php) (PHP)
 - [afontaine/unleash_ex](https://gitlab.com/afontaine/unleash_ex) (Elixir)
 - [mikefrancis/laravel-unleash](https://github.com/mikefrancis/laravel-unleash) (Laravel - PHP)
+- [AppsFlyer/clojure-unleash](https://github.com/AppsFlyer/unleash-client-clojure) (Clojure)
+- [pmb0/nestjs-unleash](https://github.com/pmb0/nestjs-unleash) (NestJS - Node.js)
 
 ### The Client API
 

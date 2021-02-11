@@ -2,13 +2,21 @@
   "documentation": {
     "User Documentation": [
       "getting_started",
+      "configuring_unleash",
       "client_sdk",
+      "feature_toggle_types",
+      "toggle_variants",
       "securing_unleash",
       "unleash_context",
       "activation_strategy",
       "client_specification",
-      "migration_guide",
-      "beta_features"
+      "migration_guide"
+    ],
+    "Addons": [
+      "addons/index",
+      "addons/webhook",
+      "addons/slack",
+      "addons/jira-commenter"
     ],
     "Developer Guide": [
       "developer_guide",
@@ -33,8 +41,11 @@
       "api/admin/strategies",
       "api/admin/metrics",
       "api/admin/events",
-      "api/admin/state"
+      "api/admin/state",
+      "api/admin/feature-types",
+      "api/admin/addons"
     ],
-    "Internal": ["api/internal"]
+    "Internal": ["api/internal"],
+    "Specification": ["api/open_api"]
   }
 }
