@@ -24,11 +24,15 @@ async function resetDatabase(stores) {
         stores.db('client_instances').del(),
         stores.db('context_fields').del(),
         stores.db('users').del(),
+        stores.db('projects').del(),
+        stores.db('tags').del(),
+        stores.db('tag_types').del(),
+        stores.db('addons').del(),
     ]);
 }
 
 function createStrategies(store) {
-    return dbState.strategies.map(s => store._createStrategy(s));
+    return dbState.strategies.map(s => store.createStrategy(s));
 }
 
 function createContextFields(store) {
@@ -43,37 +47,56 @@ function createClientInstance(store) {
     return dbState.clientInstances.map(i => store.insert(i));
 }
 
+function createProjects(store) {
+    return dbState.projects.map(i => store.create(i));
+}
+
 function createFeatures(store) {
-    return dbState.features.map(f => store._createFeature(f));
+    return dbState.features.map(f => store.createFeature(f));
+}
+
+async function tagFeatures(tagStore, store) {
+    await tagStore.createTag({ value: 'Tester', type: 'simple' });
+    return dbState.features.map(f =>
+        store.tagFeature(f.name, {
+            value: 'Tester',
+            type: 'simple',
+        }),
+    );
+}
+
+function createTagTypes(store) {
+    return dbState.tag_types.map(t => store.createTagType(t));
 }
 
 async function setupDatabase(stores) {
-    const updates = [];
-    updates.push(...createStrategies(stores.strategyStore));
-    updates.push(...createContextFields(stores.contextFieldStore));
-    updates.push(...createFeatures(stores.featureToggleStore));
-    updates.push(...createClientInstance(stores.clientInstanceStore));
-    updates.push(...createApplications(stores.clientApplicationsStore));
-
-    await Promise.all(updates);
+    await Promise.all(createStrategies(stores.strategyStore));
+    await Promise.all(createContextFields(stores.contextFieldStore));
+    await Promise.all(createFeatures(stores.featureToggleStore));
+    await Promise.all(createClientInstance(stores.clientInstanceStore));
+    await Promise.all(createApplications(stores.clientApplicationsStore));
+    await Promise.all(createProjects(stores.projectStore));
+    await Promise.all(createTagTypes(stores.tagTypeStore));
+    await tagFeatures(stores.tagStore, stores.featureToggleStore);
 }
 
 module.exports = async function init(databaseSchema = 'test', getLogger) {
     const options = {
-        db: dbConfig.getDb(),
+        db: { ...dbConfig.getDb(), pool: { min: 2, max: 8 } },
         databaseSchema,
-        minPool: 1,
-        maxPool: 1,
         getLogger,
     };
 
     const db = createDb(options);
     const eventBus = new EventEmitter();
 
+    await db.raw(`DROP SCHEMA IF EXISTS ${options.databaseSchema} CASCADE`);
     await db.raw(`CREATE SCHEMA IF NOT EXISTS ${options.databaseSchema}`);
     await migrator(options);
     await db.destroy();
     const stores = await createStores(options, eventBus);
+    stores.clientMetricsStore.setMaxListeners(0);
+    stores.eventStore.setMaxListeners(0);
     await resetDatabase(stores);
     await setupDatabase(stores);
 

@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "links": {
     "feature-toggles": {
       "uri": "/api/admin/features"
@@ -21,6 +21,12 @@
     },
     "context": {
       "uri": "/api/admin/context"
+    },
+    "tags": {
+      "uri": "/api/admin/tags"
+    },
+    "tag-types": {
+      "uri": "/api/admin/tag-types"
     }
   }
 }

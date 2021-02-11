@@ -8,11 +8,29 @@
       "activation_strategy": {
         "title": "Activation Strategies"
       },
+      "addons/index": {
+        "title": "Addons Introduction"
+      },
+      "addons/jira-commenter": {
+        "title": "Jira commenter"
+      },
+      "addons/slack": {
+        "title": "Slack"
+      },
+      "addons/webhook": {
+        "title": "Webhook"
+      },
+      "api/admin/addons": {
+        "title": "/api/admin/addons"
+      },
       "api/admin/events": {
         "title": "/api/admin/events"
       },
       "api/admin/features": {
         "title": "/api/admin/features"
+      },
+      "api/admin/feature-types": {
+        "title": "/api/admin/feature-types"
       },
       "api/admin/metrics": {
         "title": "/api/admin/metrics"
@@ -22,6 +40,9 @@
       },
       "api/admin/strategies": {
         "title": "/api/admin/strategies"
+      },
+      "api/admin/tags": {
+        "title": "/api/admin/tags"
       },
       "api/client/features": {
         "title": "/api/client/features"
@@ -38,14 +59,17 @@
       "api/internal": {
         "title": "/internal-backstage/prometheus"
       },
-      "beta_features": {
-        "title": "Beta Features"
+      "api/open_api": {
+        "title": "Open API Specification"
       },
       "client_sdk": {
         "title": "Client SDK"
       },
       "client_specification": {
         "title": "Client Specification"
+      },
+      "configuring_unleash": {
+        "title": "Configuring Unleash"
       },
       "database_backup": {
         "title": "Database Backup"
@@ -58,6 +82,12 @@
       },
       "developer_guide": {
         "title": "Developer guide"
+      },
+      "feature_toggle_types": {
+        "title": "Feature Toggle Types"
+      },
+      "toggle_variants": {
+        "title": "Feature Toggle Variants"
       },
       "getting_started": {
         "title": "Getting Started"
@@ -83,6 +113,9 @@
       "securing_unleash": {
         "title": "Securing Unleash"
       },
+      "tags": {
+        "title": "Tagging Features"
+      },
       "unleash_context": {
         "title": "Unleash Context"
       }
@@ -94,11 +127,13 @@
     },
     "categories": {
       "User Documentation": "User Documentation",
+      "Addons": "Addons",
       "Developer Guide": "Developer Guide",
       "Guides": "Guides",
       "Client": "Client",
       "Admin": "Admin",
-      "Internal": "Internal"
+      "Internal": "Internal",
+      "Specification": "Specification"
     }
   },
   "pages-strings": {

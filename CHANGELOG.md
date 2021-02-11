@@ -1,5 +1,172 @@
 # Changelog
 
+## 3.11.2
+
+- fix: update unleash-frontend to version 3.11.4
+
+## 3.11.1
+
+- fix: upgrade unleash-frontend to version 3.11.3
+
+## 3.11.0
+
+- feat: Add support for filtering toggles on tags, projects or namePrefix (#690)
+- feat: Introduce addon framework
+- feat: Added tags to events table and emitted events
+- fix: upgrade prom-client from 12.0.0 to 13.1.0
+- fix: upgrade unleash-frontend to version 3.11.2
+- fix: Add a test for validation of empty params
+- fix: add docs for addons
+- fix: Add validation of required parameters
+- fix: add unleashUrl option
+- fix: Addons should support sensitive params
+- fix: should wait for seen apps
+- fix: typo in message in simple-authentication.js (#707)
+- fix: even-store should not block on emit
+- fix: Added the ability to specify db-schema via ENV (#702)
+- fix: Strategy schema should allow deprecated field (#700)
+- docs: update getting started guide with docker options (#697)
+- fix typo in /api/client/features docs (#694)
+- fix: website: require immer 8.0.1 or higher
+- fix: Add support for configuring database pool size (#705)
+- feat: Set default min dbpool size to 0
+- feat: Set default max dbpool size to 4
+
+## 3.10.1
+
+- fix: remove fields from /api/client/features respnse (#692)
+
+## 3.10.0
+
+- feat: add tags (#655)
+- feat: add tag-types (#655)
+- feat: Added servicelayer (#685)
+- feat: Allow deprecation of strategies (#682)
+- feat: add lastSeenAt for feature toggles
+- fix: upgrade knex to 0.21.15
+- fix: Updated docs about event-types (#684)
+- fix: Add application-created event (#595)
+
+## 3.9.0
+
+- fix: stateService undefined
+- fix: this.timer merge conflict
+- feat: add stop() method to gracefully terminate unleash (#665)
+
+## 3.8.0
+
+- feat: First draft of admin Open API specification (OAS) (#652)
+- feat: upgrade unleash-frontend to version 3.8.2
+- fix: OpenApi - Added Client API calls (#667)
+- fix: run build also for external PRs
+- fix: eslint ignorePatterns for OAS
+- fix: typo in OAS servers
+- fix: add support for basic auth with simple-auth (#659)
+- fix: remove unused github action
+- fix: add heroku server to openapi servers
+- fix: add import options as part of environment variables
+- fix: bump dev-deps for security
+- fix: Replace travis with GitHub Actions
+- fix: disable david-dm
+
+## 3.7.0
+
+- feat: Add support for explicitly set database version. (#654)
+- feat: stateServices only exposed via services object
+- feat: upgrade unleash-frontend to 3.7.0
+- feat: Add technical support for projects
+- chore(docs): Fix url typo in docs
+- chore(docs): Fix url typo
+- chore(docs): Add clojure client to doc (#649)
+- chore(docs): Add clojure client to doc (#648)
+- chore(docs): Add clojure client library reference (#647)
+- fix: upgrade to unleash-frontend 3.5.6
+- fix: Allow spaces/special chars in application names
+- chore(docs): update sidebar
+- feat: Allow migration style import (#645)
+- fix: Variants missing from client API docs
+- fix: constriants must have at least one value defined
+- fix(docs): wrong id for feature-types
+- fix: do not allow empty ('') constrain values.
+- chore(deps): bump dot-prop from 4.2.0 to 4.2.1 in /website (#644)
+- fix: clarify PostgreSQL version support
+- fix: update list of SDKs supporting variants
+- fix: add docs for disabled variant
+- fix: Add api documentation for strategy constraints.
+- fix: join link to slack in help section
+- chore: fix typo in docs
+
+## 3.6.1
+
+- fix: update unleash-frontend to version 3.6.4
+- fix: upgradde unleash-frontend to version 3.6.3
+- fix: context legalValues should be at max 100 chars
+- fix: enable trust-proxy
+- fix: upgrade cookie-session library
+- fix: default maxAge for session set to two days
+- fix: add TTL to sessions
+- fix: use validated and stripped data when updating
+- fix: should use stripped update data for featureToggle
+- fix: set clear-site-data on logout
+- fix: use secure proxy to session cookie
+- fix: add secureHeaders option for HSTS
+- fix: stickness parmeters for stickiness is camelCase (doc)
+
+## 3.6.0
+
+- feat: Remove applications (#635)
+- feat: upgrade unleash-frontend to version 3.6.2. Notable changes:
+  - feat: add search for applications
+  - feat: Should be possible to remove applications
+  - fix: make sure application is updated on edit
+  - fix: list parameters should be trimmed
+  - fix: show notification when app updates
+  - fix: show notification when app updates
+- feat: upgrade knex to version 0.21.5
+- fix: Name conflict should return 409
+- fix: improve import/export documentation
+- fix: update helmet config
+- fix: Heroku Postgres add-on version change (#631)
+- fix: Add option via env for ADMIN_AUTHENTICATION
+- fix: upgrade yargs to version 16.0.3
+
+## 3.5.4
+
+- fix: helmet wap csp in quotes
+
+## 3.5.3
+
+- fix: lax helmet csp config for styles.
+
+## 3.5.2
+
+- fix: add optional helmet security headers
+- fix: The links for Kotlin and PHP clients got mixed up (#623)
+
+## 3.5.1
+
+- fix: upgrade to [unleash-frontend v3.5.1](https://github.com/Unleash/unleash-frontend/blob/master/CHANGELOG.md#351)
+
+## 3.5.0
+
+- feat: add stale property on toggle (#619)
+- fix: upgrade joi to version 17.2.0
+- feat: Add support for toggle types (#618)
+- feat: added time-ago to toggle-list
+
+## 3.4.2
+
+- fix: upgrade unleash-frontend to version 3.4.0
+- fix: version should be part of ui-config (#616)
+- feat: add weightType as legal property on variant schema (#614)
+- Update getting-started.md (#617)
+- Update @types/node to the latest version 🚀 (#596)
+- fix: upgrade js-yaml to latest
+- chore(deps): bump lodash from 4.17.15 to 4.17.19 in /website (#611)
+- fix: replace @hapi/joi with joi
+- Update getting-started.md
+- fix: exporting only feature toggles as yaml should not crash
+
 ## 3.4.1
 
 - fix: add keepAliveTimeout option
