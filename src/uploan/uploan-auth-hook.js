@@ -33,8 +33,25 @@ function uploanAuthHook(app) {
                 )
                 .end();
         }
+
         const adminDetails = isValidToken.data;
-        req.user = new User({ email: adminDetails.user_name });
+        if (!adminDetails.user_name) {
+            return res
+                .status('401')
+                .json(
+                    new AuthenticationRequired({
+                        path: uploanLoginUrl,
+                        type: 'uploan',
+                        message:
+                            'The token must be from a user credential not a client credential.',
+                    }),
+                )
+                .end();
+        }
+
+        req.user = new User({
+            email: adminDetails.user_name
+        });
         return next();
     });
 
