@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const helmet = require('helmet');
 
 const compression = require('compression');
 const favicon = require('serve-favicon');
@@ -29,6 +30,7 @@ module.exports = function(config, services = {}) {
         config.preHook(app);
     }
 
+    app.use(helmet());
     app.use(compression());
     app.use(cookieParser());
     app.use(express.json({ strict: false }));
